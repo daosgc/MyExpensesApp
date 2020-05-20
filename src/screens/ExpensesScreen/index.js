@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, ActivityIndicator, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, ScrollView, ActivityIndicator, View, FlatList } from 'react-native';
 import firebase from '../../../firebase/firebaseConfig';
 import basicStyles from '../../styles/basicStyles';
+import ExpenseRow from './ExpenseRow';
 
 class ExpenseScreen extends Component {
   constructor() {
@@ -39,7 +40,8 @@ class ExpenseScreen extends Component {
   }
 
   render() {
-    if(this.state.isLoading){
+    const { expenses, isLoading } = this.state;
+    if(isLoading){
       return(
         <View style={styles.preloader}>
           <ActivityIndicator size="large" color="#9E9E9E"/>
@@ -48,23 +50,22 @@ class ExpenseScreen extends Component {
     }
 
     return (
-      <ScrollView style={basicStyles.container}>
-          {
-            this.state.expenses.map((item, i) => {
-              return (
-                <TouchableOpacity
-                  style={styles.item}
-                  onPress={() => {
-                    this.props.navigation.navigate('ExpenseDetailScreen', {
-                      expensekey: item.key
-                    });
-                  }}>
-                  <Text>{item.name}</Text>
-                </TouchableOpacity>
-              );
-            })
-          }
-      </ScrollView>
+      <FlatList
+        style={basicStyles.container}
+        data={expenses}
+        keyExtractor={item => item.key}
+        renderItem={({ item }) => {
+          return (
+            <ExpenseRow
+              expense={item}
+              onPress={(key) => {
+                this.props.navigation.navigate('ExpenseDetailScreen', {
+                  expensekey: key
+                  });
+              }}/>
+          );
+        }}
+      />
     );
   }
 }
