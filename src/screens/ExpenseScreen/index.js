@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Button, StyleSheet, TextInput, ScrollView, ActivityIndicator, View } from 'react-native';
-import firebase from '../firebase/firebaseConfig';
+import firebase from '../../../firebase/firebaseConfig';
+import basicStyles from '../../styles/basicStyles';
 
 class ExpenseDetailScreen extends Component {
   constructor() {
@@ -91,7 +92,7 @@ class ExpenseDetailScreen extends Component {
       )
     }
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={basicStyles.container}>
         <View style={styles.inputGroup}>
           <TextInput
               placeholder={'Name'}
@@ -126,10 +127,6 @@ class ExpenseDetailScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 35
-  },
   inputGroup: {
     flex: 1,
     padding: 0,

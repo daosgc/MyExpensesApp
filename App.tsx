@@ -2,9 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import AddExpenseScreen from './screens/AddExpenseScreen';
-import ExpenseScreen from './screens/ExpenseScreen';
-import ExpenseDetailScreen from './screens/ExpenseDetailScreen';
+import { AddExpenseScreen, ExpenseScreen, ExpenseDetailScreen} from './src/screens';
 
 const Stack = createStackNavigator();
 
@@ -21,19 +19,19 @@ function MyStack() {
           },
         }}
       >
-      <Stack.Screen 
-        name="AddExpenseScreen" 
-        component={AddExpenseScreen} 
+      <Stack.Screen
+        name="AddExpenseScreen"
+        component={AddExpenseScreen}
         options={{ title: 'Add Expense' }}
       />
-      <Stack.Screen 
-        name="ExpenseScreen" 
-        component={ExpenseScreen} 
+      <Stack.Screen
+        name="ExpenseScreen"
+        component={ExpenseScreen}
         options={{ title: 'Expenses List' }}
       />
-      <Stack.Screen 
-       name="ExpenseDetailScreen" 
-       component={ExpenseDetailScreen} 
+      <Stack.Screen
+       name="ExpenseDetailScreen"
+       component={ExpenseDetailScreen}
        options={{ title: 'Expense Detail' }}
       />
     </Stack.Navigator>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView, ActivityIndicator, View, TouchableOpacity, Text } from 'react-native';
-import firebase from '../firebase/firebaseConfig';
+import firebase from '../../../firebase/firebaseConfig';
+import basicStyles from '../../styles/basicStyles';
 
 class ExpenseScreen extends Component {
   constructor() {
@@ -47,7 +48,7 @@ class ExpenseScreen extends Component {
     }
 
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={basicStyles.container}>
           {
             this.state.expenses.map((item, i) => {
               return (
@@ -69,10 +70,6 @@ class ExpenseScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-   flex: 1,
-   paddingBottom: 22
-  },
   preloader: {
     left: 0,
     right: 0,
