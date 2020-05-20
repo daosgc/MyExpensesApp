@@ -65,3 +65,6 @@ buck-out/
 # Resources android and ios
 /android
 /ios
+
+# Enviroments
+.env
