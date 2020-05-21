@@ -14,7 +14,8 @@ class ExpenseDetailScreen extends Component {
   }
 
   componentDidMount() {
-    const dbRef = firebase.firestore().collection('Expenses').doc(this.props.route.params.expensekey)
+    const expensekey = this.props.route.params.expensekey;
+    const dbRef = firebase.firestore().collection('Expenses').doc(expensekey)
     dbRef.get().then((res) => {
       if (res.exists) {
         const expense = res.data();
@@ -62,11 +63,12 @@ class ExpenseDetailScreen extends Component {
   }
 
   deleteExpenseDoc() {
-    const dbRef = firebase.firestore().collection('Expenses').doc(this.props.route.params.expensekey)
-      dbRef.delete().then((res) => {
-          console.log('Item removed from database')
-          this.props.navigation.navigate('ExpenseScreen');
-      })
+    const expensekey = this.props.route.params.expensekey;
+    const dbRef = firebase.firestore().collection('Expenses').doc(expensekey);
+    dbRef.delete().then((res) => {
+        console.log('Item removed from database')
+        this.props.navigation.navigate('ExpenseScreen');
+    })
   }
 
   openConfirmAlert=()=>{

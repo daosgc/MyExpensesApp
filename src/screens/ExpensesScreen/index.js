@@ -3,6 +3,7 @@ import { StyleSheet, ScrollView, ActivityIndicator, View, FlatList } from 'react
 import firebase from '../../../firebase/firebaseConfig';
 import basicStyles from '../../styles/basicStyles';
 import ExpenseRow from './ExpenseRow';
+import FloatIconButton from '../../components/FloatIconButton';
 
 class ExpenseScreen extends Component {
   constructor() {
@@ -39,8 +40,19 @@ class ExpenseScreen extends Component {
    });
   }
 
+  onAddExpense = () => {
+    this.props.navigation.navigate('AddExpenseScreen');
+  }
+
+  onEditExpense = (key) => {
+    this.props.navigation.navigate('ExpenseDetailScreen', {
+      expensekey: key
+    });
+  }
+
   render() {
     const { expenses, isLoading } = this.state;
+
     if(isLoading){
       return(
         <View style={styles.preloader}>
@@ -50,22 +62,20 @@ class ExpenseScreen extends Component {
     }
 
     return (
-      <FlatList
-        style={basicStyles.container}
-        data={expenses}
-        keyExtractor={item => item.key}
-        renderItem={({ item }) => {
-          return (
-            <ExpenseRow
-              expense={item}
-              onPress={(key) => {
-                this.props.navigation.navigate('ExpenseDetailScreen', {
-                  expensekey: key
-                  });
-              }}/>
-          );
-        }}
-      />
+      <View style={basicStyles.container}>
+        <FlatList
+          data={expenses}
+          keyExtractor={item => item.key}
+          renderItem={({ item }) => {
+            return (
+              <ExpenseRow
+                expense={item}
+                onPress={this.onEditExpense}/>
+            );
+          }}
+        />
+        <FloatIconButton onPress={this.onAddExpense}/>
+      </View>
     );
   }
 }
