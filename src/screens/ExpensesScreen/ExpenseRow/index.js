@@ -7,7 +7,7 @@ const ExpenseRow = ({ expense, onPress }) => {
     <TouchableOpacity
       style={[
         styles.item,
-        { backgroundColor: kind === 'incomming' ? '#22863a': '#d73a49' }
+        kind && { backgroundColor: kind === 'incomming' ? '#22863a': '#d73a49' }
       ]}
       onPress={() => { onPress(key)}}>
       <Text>Name: {name}</Text>
