@@ -19,7 +19,7 @@ const AppNavigator = () => {
               fontWeight: 'bold',
             },
           }}
-        initialRouteName="ExpenseScreen"
+        initialRouteName="AddExpenseScreen"
         >
         <Stack.Screen
           name="AddExpenseScreen"

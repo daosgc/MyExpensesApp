@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, TextInput, ScrollView, ActivityIndicator, View } from 'react-native';
+import { StyleSheet, TextInput, ScrollView, ActivityIndicator, View } from 'react-native';
 import firebase from '../../../firebase/firebaseConfig';
 import basicStyles from '../../styles/basicStyles';
+import { Button, Text } from 'native-base';
 
 class AddExpenseScreen extends Component {
   constructor() {
@@ -71,13 +72,11 @@ class AddExpenseScreen extends Component {
               onChangeText={(val) => this.onChangeInputTex(val, 'price')}
           />
         </View>
-        <View style={styles.button}>
-          <Button
-            title='Add Expense'
-            onPress={() => this.saveExpense()}
-            color="#19AC52"
-          />
-        </View>
+        <Button block
+          style={styles.button}
+          onPress={() => this.saveExpense()}>
+          <Text style={{color: "#ffff"}}>Add Expense</Text>
+        </Button>
       </ScrollView>
       );
     }
@@ -100,6 +99,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  button: {
+    backgroundColor: '#621FF7'
   }
 })
 
