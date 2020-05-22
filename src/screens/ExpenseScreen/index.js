@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Alert, Button, StyleSheet, TextInput, ScrollView, ActivityIndicator, View } from 'react-native';
 import basicStyles from '../../styles/basicStyles';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { removeExpense, updateExpense } from '../../redux/actions/expensesActions';
 
 class ExpenseDetailScreen extends Component {
   constructor() {
@@ -12,7 +15,16 @@ class ExpenseDetailScreen extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const expensekey = this.props.route.params.expensekey;
+    const { expenses } = this.props;
+    const expense = expenses.find(expense => expense.key === expensekey);
+    this.setState({
+      key: expense.key,
+      name: expense.name,
+      price: expense.price
+    });
+  }
 
   onChangeInputTex = (val, prop) => {
     const state = this.state;
@@ -21,11 +33,21 @@ class ExpenseDetailScreen extends Component {
   }
 
   updateExpenseDoc() {
-    this.props.navigation.navigate('ExpenseScreen');
+    const expensekey = this.props.route.params.expensekey;
+    const { name, price } = this.state;
+    const expenseUpdated = {
+      key: expensekey,
+      name,
+      price
+    };
+    this.props.updateExpense(expensekey, expenseUpdated);
+    this.props.navigation.goBack();
   }
 
   deleteExpenseDoc() {
-    this.props.navigation.navigate('ExpenseScreen');
+    const expensekey = this.props.route.params.expensekey;
+    this.props.removeExpense(expensekey);
+    this.props.navigation.goBack();
   }
 
   openConfirmAlert=()=>{
@@ -107,4 +129,19 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ExpenseDetailScreen;
+const mapStateToProps = state => {
+  return {
+    expenses: state.expenses
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      updateExpense,
+      removeExpense
+    },
+    dispatch
+  )
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseDetailScreen);

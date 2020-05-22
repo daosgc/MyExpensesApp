@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, TextInput, ScrollView, ActivityIndicator, View } from 'react-native';
 import basicStyles from '../../styles/basicStyles';
 import { Button, Text } from 'native-base';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addExpense } from '../../redux/actions/expensesActions';
 
 class AddExpenseScreen extends Component {
   constructor() {
@@ -20,6 +23,13 @@ class AddExpenseScreen extends Component {
   }
 
   saveExpense() {
+    const { name, price } = this.state;
+    const newExpense = {
+      key: Math.floor(Math.random() * 1000),
+      name,
+      price
+    };
+    this.props.addExpense(newExpense);
     this.props.navigation.navigate('ExpenseScreen');
   }
 
@@ -80,4 +90,16 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AddExpenseScreen;
+const mapStateToProps = state => {
+  return {};
+}
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      addExpense
+    },
+    dispatch
+  )
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AddExpenseScreen);

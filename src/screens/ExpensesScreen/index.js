@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { StyleSheet, ActivityIndicator, View, FlatList } from 'react-native';
 import ExpenseRow from './ExpenseRow';
 import FloatIconButton from '../../components/FloatIconButton';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class ExpenseScreen extends Component {
   constructor() {
     super();
     this.state = {
-      isLoading: true,
+      isLoading: false,
       expenses: []
     };
   }
@@ -27,7 +29,8 @@ class ExpenseScreen extends Component {
   }
 
   render() {
-    const { expenses, isLoading } = this.state;
+    const { isLoading } = this.state;
+    const { expenses } = this.props;
 
     if(isLoading){
       return(
@@ -77,5 +80,14 @@ const styles = StyleSheet.create({
   },
 })
 
+const mapStateToProps = state => {
+  return {
+    expenses: state.expenses
+  };
+}
 
-export default ExpenseScreen;
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseScreen);
