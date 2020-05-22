@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, ActivityIndicator, View, FlatList } from 'react-native';
+import { StyleSheet, ActivityIndicator, View, FlatList } from 'react-native';
 import firebase from '../../../firebase/firebaseConfig';
-import basicStyles from '../../styles/basicStyles';
 import ExpenseRow from './ExpenseRow';
 import FloatIconButton from '../../components/FloatIconButton';
 
@@ -62,7 +61,7 @@ class ExpenseScreen extends Component {
     }
 
     return (
-      <View style={basicStyles.container}>
+      <View style={styles.container}>
         <FlatList
           data={expenses}
           keyExtractor={item => item.key}
@@ -81,6 +80,10 @@ class ExpenseScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10
+  },
   preloader: {
     left: 0,
     right: 0,
