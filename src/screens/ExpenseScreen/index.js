@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Alert, Button, StyleSheet, TextInput, ScrollView, ActivityIndicator, View } from 'react-native';
-import firebase from '../../../firebase/firebaseConfig';
 import basicStyles from '../../styles/basicStyles';
 
 class ExpenseDetailScreen extends Component {
@@ -13,23 +12,7 @@ class ExpenseDetailScreen extends Component {
     };
   }
 
-  componentDidMount() {
-    const expensekey = this.props.route.params.expensekey;
-    const dbRef = firebase.firestore().collection('Expenses').doc(expensekey)
-    dbRef.get().then((res) => {
-      if (res.exists) {
-        const expense = res.data();
-        this.setState({
-          key: res.id,
-          name: expense.name,
-          price: expense.price,
-          isLoading: false
-        });
-      } else {
-        console.log("Document does not exist!");
-      }
-    });
-  }
+  componentDidMount() {}
 
   onChangeInputTex = (val, prop) => {
     const state = this.state;
@@ -38,37 +21,11 @@ class ExpenseDetailScreen extends Component {
   }
 
   updateExpenseDoc() {
-    this.setState({
-      isLoading: true,
-    });
-    const updateDBRef = firebase.firestore().collection('Expenses').doc(this.state.key);
-    updateDBRef.set({
-      name: this.state.name,
-      price: this.state.price,
-    }).then((docRef) => {
-      this.setState({
-        key: '',
-        name: '',
-        price: '',
-        isLoading: false,
-      });
-      this.props.navigation.navigate('ExpenseScreen');
-    })
-    .catch((error) => {
-      console.error("Error: ", error);
-      this.setState({
-        isLoading: false,
-      });
-    });
+    this.props.navigation.navigate('ExpenseScreen');
   }
 
   deleteExpenseDoc() {
-    const expensekey = this.props.route.params.expensekey;
-    const dbRef = firebase.firestore().collection('Expenses').doc(expensekey);
-    dbRef.delete().then((res) => {
-        console.log('Item removed from database')
-        this.props.navigation.navigate('ExpenseScreen');
-    })
+    this.props.navigation.navigate('ExpenseScreen');
   }
 
   openConfirmAlert=()=>{

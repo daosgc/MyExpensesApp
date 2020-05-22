@@ -1,43 +1,20 @@
 import React, { Component } from 'react';
 import { StyleSheet, ActivityIndicator, View, FlatList } from 'react-native';
-import firebase from '../../../firebase/firebaseConfig';
 import ExpenseRow from './ExpenseRow';
 import FloatIconButton from '../../components/FloatIconButton';
 
 class ExpenseScreen extends Component {
   constructor() {
     super();
-    this.firestoreRef = firebase.firestore().collection('Expenses');
     this.state = {
       isLoading: true,
       expenses: []
     };
   }
 
-  componentDidMount() {
-    this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollection);
-  }
+  componentDidMount() {}
 
-  componentWillUnmount(){
-    this.unsubscribe();
-  }
-
-  getCollection = (querySnapshot) => {
-    const expenses = [];
-    querySnapshot.forEach((res) => {
-      const { name, price } = res.data();
-      expenses.push({
-        key: res.id,
-        res,
-        name,
-        price,
-      });
-    });
-    this.setState({
-      expenses,
-      isLoading: false,
-   });
-  }
+  componentWillUnmount() {}
 
   onAddExpense = () => {
     this.props.navigation.navigate('AddExpenseScreen');

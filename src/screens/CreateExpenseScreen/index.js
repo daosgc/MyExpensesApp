@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, TextInput, ScrollView, ActivityIndicator, View } from 'react-native';
-import firebase from '../../../firebase/firebaseConfig';
 import basicStyles from '../../styles/basicStyles';
 import { Button, Text } from 'native-base';
 
 class AddExpenseScreen extends Component {
   constructor() {
     super();
-    this.fireStoreRef = firebase.firestore().collection('Expenses');
     this.state = {
       name: '',
       price: '',
@@ -22,30 +20,7 @@ class AddExpenseScreen extends Component {
   }
 
   saveExpense() {
-    if(this.state.name === '' && this.state.price === ''){
-     alert('please insert all values!')
-    } else {
-      this.setState({
-        isLoading: true,
-      });
-      this.fireStoreRef.add({
-        name: this.state.name,
-        price: this.state.price
-      }).then((res) => {
-        this.setState({
-          name: '',
-          price: '',
-          isLoading: false
-        });
-        this.props.navigation.navigate('ExpenseScreen')
-      })
-      .catch((err) => {
-        console.error("Error found: ", err);
-        this.setState({
-          isLoading: false,
-        });
-      });
-    }
+    this.props.navigation.navigate('ExpenseScreen');
   }
 
   render() {
